@@ -1,6 +1,7 @@
 package contactlist.service.serviceimpl;
 
-import contactlist.model.response.Contactlist;
+import contactlist.model.request.ContactlistRequest;
+import contactlist.model.response.ContactlistResponse;
 import contactlist.repository.ContactListRepository;
 import contactlist.service.ContactListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,31 +19,37 @@ import java.util.List;
 @Transactional() @Service() public class ContactListServiceImpl implements ContactListService {
   @Autowired() private ContactListRepository contactListRepository;
 
-  @Override() public Contactlist findById(final Long id) {
+  @Override() public ContactlistResponse findById(final Long id) {
     contactlist.entity.Contactlist contactList = contactListRepository.findOne(id);
     if (contactList == null) {
       throw new NotFoundException("contact list with id " + id + " not found");
     }
-    final Contactlist contactListResponse = new Contactlist();
+    final ContactlistResponse contactListResponse = new ContactlistResponse();
     contactListResponse.setName(contactList.getName());
     contactListResponse.setId(contactList.getId());
-    contactListResponse.setUserid(contactList.getuserid());
     return contactListResponse;
   }
 
-  @Override public List<Contactlist> get(final Pageable pageable) {
+  @Override public List<ContactlistResponse> get(final Pageable pageable) {
     Iterable<contactlist.entity.Contactlist> contactLists = contactListRepository.findAll(pageable);
-    final List<Contactlist> contactListsResponse = new ArrayList<>();
+    final List<ContactlistResponse> contactListsResponse = new ArrayList<>();
     if (contactLists == null) {
       return contactListsResponse;
     }
     contactLists.iterator().forEachRemaining(contactlist -> {
-      final Contactlist ctlist = new Contactlist();
+      final ContactlistResponse ctlist = new ContactlistResponse();
       ctlist.setId(contactlist.getId());
       ctlist.setName(contactlist.getName());
-      ctlist.setUserid(contactlist.getuserid());
       contactListsResponse.add(ctlist);
     });
     return contactListsResponse;
+  }
+
+  @Override public ContactlistResponse create(ContactlistRequest contactlistRequestRequest) {
+    return null;
+  }
+
+  @Override public ContactlistResponse update(ContactlistRequest contactlistRequestRequest) {
+    return null;
   }
 }

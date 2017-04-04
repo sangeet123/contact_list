@@ -43,7 +43,7 @@ import java.io.Serializable;
   }
 
   @Override public String toString() {
-    return "Contactlist{" +
+    return "ContactlistRequest{" +
         "id=" + id +
         ", userid=" + userid +
         ", name='" + name + '\'' +

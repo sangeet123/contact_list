@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 /**
  * Created by sangeet on 3/11/2017.
  */
-@JsonInclude(value = JsonInclude.Include.NON_NULL) public class Contactlist {
+@JsonInclude(value = JsonInclude.Include.NON_NULL) public class ContactlistRequest {
   private static final int NAME_MAX_SIZE = 30;
   @JsonProperty(value = "name") @NotNull() @Size(max = NAME_MAX_SIZE) private String name;
 
