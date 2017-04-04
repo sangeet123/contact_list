@@ -15,10 +15,16 @@ public class Contactlist {
     return id;
   }
 
-  public Long getUserid() { return userid;}
-
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public Long getUserid() {
+    return userid;
+  }
+
+  public void setUserid(final Long userid) {
+    this.userid = userid;
   }
 
   public String getName() {
@@ -28,8 +34,6 @@ public class Contactlist {
   public void setName(String name) {
     this.name = name;
   }
-
-  public void setUserid(final Long userid){this.userid = userid;}
 
   @Override() public boolean equals(Object o) {
     if (this == o)

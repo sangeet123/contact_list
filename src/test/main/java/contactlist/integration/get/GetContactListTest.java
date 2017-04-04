@@ -14,10 +14,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @SqlGroup({ @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {
-    "classpath:sql/create-user.sql", "classpath:sql/create-contactlist.sql" }),
+    "classpath:sql/create-schema.sql", "classpath:sql/create-user.sql",
+    "classpath:sql/create-contactlist.sql" }),
     @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = {
-        "classpath:sql/drop-user.sql",
-        "classpath:sql/drop-contactlist.sql" }) }) public class GetContactListTest
+        "classpath:sql/drop-user.sql", "classpath:sql/drop-contactlist.sql",
+        "classpath:sql/drop-schema.sql" }) }) public class GetContactListTest
     extends IntegrationTestConfigurer {
   @Test public void testContactListGet() throws Exception {
     final ResponseEntity<String> responseEntity = this.doGet("/contactlist");
