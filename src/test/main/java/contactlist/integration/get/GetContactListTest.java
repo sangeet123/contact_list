@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
     "classpath:sql/create-schema.sql", "classpath:sql/create-user.sql",
     "classpath:sql/create-contactlist.sql" }),
     @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = {
-        "classpath:sql/drop-user.sql", "classpath:sql/drop-contactlist.sql",
         "classpath:sql/drop-schema.sql" }) }) public class GetContactListTest
     extends IntegrationTestConfigurer {
   @Test public void testGetContactList() throws Exception {

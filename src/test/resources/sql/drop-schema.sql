@@ -1,1 +1,1 @@
-DROP  DATABASE contactlisttest1;
+DROP  DATABASE integrationtestcontactlist;

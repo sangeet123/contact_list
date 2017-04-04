@@ -1,10 +1,8 @@
 package contactlist.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * Created by sangeet on 3/11/2017.
@@ -14,6 +12,8 @@ import java.io.Serializable;
   @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
   @Column(name = "userid", nullable = false) private Long userid;
   @Column(name = "name", nullable = false) private String name;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "contactlist", targetEntity = Contact.class,
+      fetch = FetchType.LAZY) private Collection contacts;
 
   public Contactlist() {
   }
@@ -40,6 +40,14 @@ import java.io.Serializable;
 
   public void setUserid(final Long userid) {
     this.userid = userid;
+  }
+
+  public Collection getContacts() {
+    return contacts;
+  }
+
+  public void setContacts(Collection contacts) {
+    this.contacts = contacts;
   }
 
   @Override public String toString() {

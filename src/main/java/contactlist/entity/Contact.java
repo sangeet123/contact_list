@@ -1,14 +1,12 @@
 package contactlist.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by sangeet on 4/4/2017.
  */
-//@Entity(name = "contact")
+@Entity(name = "contact")
 public class Contact implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -21,7 +19,7 @@ public class Contact implements Serializable {
   @Column(name = "firstname")
   private String firstName;
 
-  @Column(name = "firstname")
+  @Column(name = "lastname")
   private String lastname;
 
   @Column(name = "email")
@@ -29,6 +27,10 @@ public class Contact implements Serializable {
 
   @Column(name = "phonenumber")
   private String phoneNumber;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(name="contactlist",referencedColumnName="id")
+  private Contactlist contactlist;
 
   public Contact() {
   }
@@ -81,8 +83,17 @@ public class Contact implements Serializable {
     this.phoneNumber = phoneNumber;
   }
 
+  public Contactlist getContactlist() {
+    return contactlist;
+  }
+
+  public void setContactlist(Contactlist contactlist) {
+    this.contactlist = contactlist;
+  }
+
   @Override public String toString() {
     return "Contact{" +
+
         "id=" + id +
         ", contactListId=" + contactListId +
         ", firstName='" + firstName + '\'' +
