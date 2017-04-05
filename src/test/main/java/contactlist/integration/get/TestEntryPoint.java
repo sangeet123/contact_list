@@ -16,5 +16,6 @@ import org.springframework.test.context.jdbc.SqlGroup;
     testGetContactList.testGetById();
     testGetContactList.testGetContactList();
     testGetContactList.testGetContactListPaginationWithSorting();
+    testGetContactList.testNotFoundById();
   }
 }

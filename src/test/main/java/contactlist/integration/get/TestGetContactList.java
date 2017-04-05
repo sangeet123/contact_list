@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -55,4 +56,11 @@ public class TestGetContactList {
     assertEquals(response.getName(), "Friends");
     assertEquals(response.getId(), Long.valueOf(1));
   }
+
+  public void testNotFoundById() throws Exception {
+    final ResponseEntity<String> responseEntity = IntegrationTestUtils.doGet("/contactlist/5");
+    assertEquals(404, responseEntity.getStatusCode().value());
+    assertFalse(responseEntity.hasBody());
+  }
+
 }
