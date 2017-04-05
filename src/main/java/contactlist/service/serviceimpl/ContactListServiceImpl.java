@@ -1,5 +1,6 @@
 package contactlist.service.serviceimpl;
 
+import contactlist.exceptions.NotFoundException;
 import contactlist.model.request.ContactlistRequest;
 import contactlist.model.response.ContactlistResponse;
 import contactlist.repository.ContactListRepository;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +19,8 @@ import java.util.List;
 @Transactional() @Service() public class ContactListServiceImpl implements ContactListService {
   @Autowired() private ContactListRepository contactListRepository;
 
-  @Override() public ContactlistResponse findById(final Long id) {
-    contactlist.entity.Contactlist contactList = contactListRepository.findOne(id);
+  @Override() public ContactlistResponse findByIdAndUserId(final Long id, final Long userId) {
+    contactlist.entity.Contactlist contactList = contactListRepository.findByIdAndUserid(id, userId);
     if (contactList == null) {
       throw new NotFoundException("contact list with id " + id + " not found");
     }

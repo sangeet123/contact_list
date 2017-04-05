@@ -10,7 +10,7 @@ import java.util.List;
  * Created by sangeet on 4/1/2017.
  */
 public interface ContactListService {
-  ContactlistResponse findById(final Long id);
+  ContactlistResponse findByIdAndUserId(final Long id, final Long userId);
 
   List<ContactlistResponse> get(final Pageable pageable);
 

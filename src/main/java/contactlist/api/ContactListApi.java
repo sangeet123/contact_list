@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -19,8 +20,9 @@ import java.util.List;
   @Autowired() private ContactListService contactListService;
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET) public @ResponseBody() ContactlistResponse get(
-      @PathVariable Long id) {
-    return contactListService.findById(id);
+      @PathVariable Long id, final HttpServletRequest request) {
+    final Long userId = (Long) request.getAttribute("userId");
+    return contactListService.findByIdAndUserId(id, userId);
   }
 
   @RequestMapping(method = RequestMethod.GET) public @ResponseBody() List<ContactlistResponse> get(
