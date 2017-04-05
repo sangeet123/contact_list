@@ -3,6 +3,7 @@ package contactlist.integration.get;
 import com.fasterxml.jackson.core.type.TypeReference;
 import contactlist.integration.IntegrationTestUtils;
 import contactlist.model.response.ContactlistResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -14,11 +15,11 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by sangeet on 4/4/2017.
  */
-public class TestGetContactList {
+public class TestEndPointsForContactList {
   public void testGetContactList() throws Exception {
 
     final ResponseEntity<String> responseEntity = IntegrationTestUtils.doGet("/contactlist");
-    assertEquals(200, responseEntity.getStatusCode().value());
+    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     List<ContactlistResponse> ctlist = IntegrationTestUtils
         .readEntity(responseEntity, new TypeReference<List<ContactlistResponse>>() {
         });
@@ -35,7 +36,7 @@ public class TestGetContactList {
   public void testGetContactListPaginationWithSorting() throws Exception {
     final ResponseEntity<String> responseEntity = IntegrationTestUtils
         .doGet("contactlist?page=0&size=2&sort=name,asc");
-    assertEquals(200, responseEntity.getStatusCode().value());
+    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     List<ContactlistResponse> ctlist = IntegrationTestUtils
         .readEntity(responseEntity, new TypeReference<List<ContactlistResponse>>() {
         });
@@ -49,7 +50,7 @@ public class TestGetContactList {
 
   public void testGetById() throws Exception {
     final ResponseEntity<String> responseEntity = IntegrationTestUtils.doGet("/contactlist/1");
-    assertEquals(200, responseEntity.getStatusCode().value());
+    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     final ContactlistResponse response = IntegrationTestUtils
         .readEntity(responseEntity, new TypeReference<ContactlistResponse>() {
         });
@@ -57,9 +58,26 @@ public class TestGetContactList {
     assertEquals(response.getId(), Long.valueOf(1));
   }
 
-  public void testNotFoundById() throws Exception {
+  public void testGetNotFoundById() throws Exception {
     final ResponseEntity<String> responseEntity = IntegrationTestUtils.doGet("/contactlist/5");
-    assertEquals(404, responseEntity.getStatusCode().value());
+    assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    assertFalse(responseEntity.hasBody());
+  }
+
+  public void testSuccessFullDeleteById() throws Exception{
+    ResponseEntity<String> responseEntity = IntegrationTestUtils.doDelete("/contactlist/2");
+    assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+    assertFalse(responseEntity.hasBody());
+
+    //Again deleting same resources should result in 404
+    responseEntity = IntegrationTestUtils.doDelete("/contactlist/2");
+    assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    assertFalse(responseEntity.hasBody());
+  }
+
+  public void testDeleteByIdNotFound() throws Exception{
+    ResponseEntity<String> responseEntity = IntegrationTestUtils.doDelete("/contactlist/2");
+    assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     assertFalse(responseEntity.hasBody());
   }
 

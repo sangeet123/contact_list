@@ -30,8 +30,8 @@ import java.util.List;
     return contactListResponse;
   }
 
-  @Override public List<ContactlistResponse> get(final Pageable pageable) {
-    Iterable<contactlist.entity.Contactlist> contactLists = contactListRepository.findAll(pageable);
+  @Override public List<ContactlistResponse> get(final Long userId, final Pageable pageable) {
+    Iterable<contactlist.entity.Contactlist> contactLists = contactListRepository.findByUserid(userId,pageable);
     final List<ContactlistResponse> contactListsResponse = new ArrayList<>();
     if (contactLists == null) {
       return contactListsResponse;
@@ -51,5 +51,12 @@ import java.util.List;
 
   @Override public ContactlistResponse update(ContactlistRequest contactlistRequestRequest) {
     return null;
+  }
+
+  @Override public void delete(Long id, Long userId) {
+    final Integer noOfRecordsDeleted = contactListRepository.removeByIdAndUserid(id, userId);
+    if(noOfRecordsDeleted == 0){
+      throw new NotFoundException("contactlist with " + id + " and userid " + userId + " does not exist");
+    }
   }
 }

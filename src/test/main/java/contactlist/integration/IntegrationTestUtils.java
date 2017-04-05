@@ -62,6 +62,14 @@ import org.springframework.stereotype.Component;
     return responseEntity;
   }
 
+  public static ResponseEntity<String> doDelete(final String uri, final String... params) {
+    final String endPoint = getEndPoint(uri);
+    ResponseEntity<String> responseEntity = restTemplate
+        .exchange(endPoint, HttpMethod.DELETE, prepareAuthorizationHeader(), String.class);
+    return responseEntity;
+  }
+
+
   public static <T> T readEntity(final ResponseEntity<String> responseEntity,
       final TypeReference<T> typeReference) throws Exception {
     final ObjectMapper mapper = new ObjectMapper();

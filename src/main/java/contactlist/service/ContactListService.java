@@ -12,10 +12,11 @@ import java.util.List;
 public interface ContactListService {
   ContactlistResponse findByIdAndUserId(final Long id, final Long userId);
 
-  List<ContactlistResponse> get(final Pageable pageable);
+  List<ContactlistResponse> get(final Long userId, final Pageable pageable);
 
   ContactlistResponse create(final ContactlistRequest contactlistRequestRequest);
 
   ContactlistResponse update(final ContactlistRequest contactlistRequestRequest);
 
+  void delete(final Long id, final Long userId);
 }

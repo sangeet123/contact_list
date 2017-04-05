@@ -12,10 +12,12 @@ import org.springframework.test.context.jdbc.SqlGroup;
         "classpath:sql/drop-schema.sql" }) }) public class TestEntryPoint
     extends IntegrationTestConfigurer {
   @Test public void testGetContactList() throws Exception {
-    final TestGetContactList testGetContactList = new TestGetContactList();
-    testGetContactList.testGetById();
-    testGetContactList.testGetContactList();
-    testGetContactList.testGetContactListPaginationWithSorting();
-    testGetContactList.testNotFoundById();
+    final TestEndPointsForContactList testEndPointsForContactList = new TestEndPointsForContactList();
+    testEndPointsForContactList.testGetById();
+    testEndPointsForContactList.testGetContactList();
+    testEndPointsForContactList.testGetContactListPaginationWithSorting();
+    testEndPointsForContactList.testGetNotFoundById();
+    testEndPointsForContactList.testSuccessFullDeleteById();
+    testEndPointsForContactList.testDeleteByIdNotFound();
   }
 }
