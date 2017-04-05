@@ -28,11 +28,13 @@ import java.util.List;
     return contactListService.get(pageable);
   }
 
-  @RequestMapping(method = RequestMethod.POST) public @ResponseBody() ContactlistResponse create(final ContactlistRequest contactlistRequest) {
+  @RequestMapping(method = RequestMethod.POST) public @ResponseBody() ContactlistResponse create(
+      final ContactlistRequest contactlistRequest) {
     return contactListService.create(contactlistRequest);
   }
 
-  @RequestMapping(method = RequestMethod.PUT) public @ResponseBody() ContactlistResponse update(final ContactlistRequest contactlistRequest) {
+  @RequestMapping(method = RequestMethod.PUT) public @ResponseBody() ContactlistResponse update(
+      final ContactlistRequest contactlistRequest) {
     return contactListService.create(contactlistRequest);
   }
 }

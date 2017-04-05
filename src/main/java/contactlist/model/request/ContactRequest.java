@@ -13,18 +13,13 @@ public class ContactRequest {
 
   private Long contactListId;
 
-  @JsonProperty(value = "firstName") @NotNull() @Size(max = MAX_SIZE)
-  private String firstName;
+  @JsonProperty(value = "firstName") @NotNull() @Size(max = MAX_SIZE) private String firstName;
 
-  @JsonProperty(value = "lastName") @NotNull() @Size(max = MAX_SIZE)
-  private String lastname;
+  @JsonProperty(value = "lastName") @NotNull() @Size(max = MAX_SIZE) private String lastname;
 
-  @JsonProperty(value = "email")
-  @NotNull()
-  private String email;
+  @JsonProperty(value = "email") @NotNull() private String email;
 
-  @JsonProperty(value = "phoneNumber")
-  private String phoneNumber;
+  @JsonProperty(value = "phoneNumber") private String phoneNumber;
 
   public ContactRequest() {
   }

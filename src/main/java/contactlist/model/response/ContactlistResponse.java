@@ -40,8 +40,7 @@ public class ContactlistResponse {
   }
 
   @Override() public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(getId()).append(getName())
-        .toHashCode();
+    return new HashCodeBuilder(17, 37).append(getId()).append(getName()).toHashCode();
   }
 
   @Override() public String toString() {

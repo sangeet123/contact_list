@@ -6,31 +6,22 @@ import java.io.Serializable;
 /**
  * Created by sangeet on 4/4/2017.
  */
-@Entity(name = "contact")
-public class Contact implements Serializable {
+@Entity(name = "contact") public class Contact implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @Id() @GeneratedValue() @Column(name = "id", nullable = false)
-  private Long id;
+  @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
 
-  @Column(name = "contactlistid", nullable = false)
-  private Long contactListId;
+  @Column(name = "contactlistid", nullable = false) private Long contactListId;
 
-  @Column(name = "firstname")
-  private String firstName;
+  @Column(name = "firstname") private String firstName;
 
-  @Column(name = "lastname")
-  private String lastname;
+  @Column(name = "lastname") private String lastname;
 
-  @Column(name = "email")
-  private String email;
+  @Column(name = "email") private String email;
 
-  @Column(name = "phonenumber")
-  private String phoneNumber;
+  @Column(name = "phonenumber") private String phoneNumber;
 
-  @ManyToOne(optional = false)
-  @JoinColumn(name="contactlist",referencedColumnName="id")
-  private Contactlist contactlist;
+  @ManyToOne(optional = false) @JoinColumn(name = "contactlist", referencedColumnName = "id") private Contactlist contactlist;
 
   public Contact() {
   }

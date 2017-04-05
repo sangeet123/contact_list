@@ -36,7 +36,7 @@ public class ContactListVerifier extends HandlerInterceptorAdapter {
         return true;
       }
     } catch (final NumberFormatException ex) {
-      LOGGER.debug("{Not valid user id}",ex);
+      LOGGER.debug("{Not valid user id}", ex);
     }
     throw new NotFoundException();
   }
