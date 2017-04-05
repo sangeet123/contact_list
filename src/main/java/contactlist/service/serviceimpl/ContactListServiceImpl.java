@@ -1,5 +1,6 @@
 package contactlist.service.serviceimpl;
 
+import contactlist.entity.Contactlist;
 import contactlist.model.request.ContactlistRequest;
 import contactlist.model.response.ContactlistResponse;
 import contactlist.repository.ContactListRepository;
@@ -45,8 +46,17 @@ import java.util.List;
     return contactListsResponse;
   }
 
-  @Override public ContactlistResponse create(ContactlistRequest contactlistRequestRequest) {
-    return null;
+  @Override public ContactlistResponse create(final Long userId, ContactlistRequest contactlistRequestRequest) {
+
+    Contactlist contactlist = new Contactlist();
+    contactlist.setUserid(userId);
+    contactlist.setName(contactlistRequestRequest.getName());
+    contactlist = contactListRepository.save(contactlist);
+
+    final ContactlistResponse contactlistResponse = new ContactlistResponse();
+    contactlistResponse.setId(contactlist.getId());
+    contactlistResponse.setName(contactlist.getName());
+    return contactlistResponse;
   }
 
   @Override public ContactlistResponse update(ContactlistRequest contactlistRequestRequest) {

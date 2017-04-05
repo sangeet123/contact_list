@@ -1,6 +1,6 @@
-package contactlist.integration.get;
+package contactlist.integration;
 
-import contactlist.integration.IntegrationTestConfigurer;
+import contactlist.integration.contactlist.endpoint.TestEndPointsForContactList;
 import org.junit.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -19,5 +19,6 @@ import org.springframework.test.context.jdbc.SqlGroup;
     testEndPointsForContactList.testGetNotFoundById();
     testEndPointsForContactList.testSuccessFullDeleteById();
     testEndPointsForContactList.testDeleteByIdNotFound();
+    testEndPointsForContactList.testSuccessFullCreate();
   }
 }

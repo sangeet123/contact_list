@@ -9,6 +9,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
+
+import java.util.Arrays;
 
 /**
  * Created by sangeet on 4/4/2017.
@@ -48,31 +51,57 @@ import org.springframework.stereotype.Component;
         + uri;
   }
 
-  public static HttpEntity<String> prepareAuthorizationHeader() {
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("Authorization", accessToken);
+  public static HttpEntity<String> prepareHttpEntity() {
+    MultiValueMap<String, String> headers = new HttpHeaders();
+    headers.put("Authorization", Arrays.asList(accessToken));
     HttpEntity<String> entity = new HttpEntity<>(headers);
+    return entity;
+  }
+
+  public static HttpEntity<String> prepareHttpEntityForPost(final String body) {
+    MultiValueMap<String, String> headers = new HttpHeaders();
+    headers.put("Authorization", Arrays.asList(accessToken));
+    headers.put("Content-Type", Arrays.asList("application/json"));
+    HttpEntity<String> entity = new HttpEntity<>(body, headers);
     return entity;
   }
 
   public static ResponseEntity<String> doGet(final String uri, final String... params) {
     final String endPoint = getEndPoint(uri);
     ResponseEntity<String> responseEntity = restTemplate
-        .exchange(endPoint, HttpMethod.GET, prepareAuthorizationHeader(), String.class);
+        .exchange(endPoint, HttpMethod.GET, prepareHttpEntity(), String.class);
     return responseEntity;
   }
 
   public static ResponseEntity<String> doDelete(final String uri, final String... params) {
     final String endPoint = getEndPoint(uri);
     ResponseEntity<String> responseEntity = restTemplate
-        .exchange(endPoint, HttpMethod.DELETE, prepareAuthorizationHeader(), String.class);
+        .exchange(endPoint, HttpMethod.DELETE, prepareHttpEntity(), String.class);
     return responseEntity;
   }
 
+  public static ResponseEntity<String> doPost(final String uri, final Object body,
+      final String... params) {
+    final String endPoint = getEndPoint(uri);
+    ResponseEntity<String> responseEntity = null;
+    try {
+      responseEntity = restTemplate
+          .exchange(endPoint, HttpMethod.POST, prepareHttpEntityForPost(jsonSerilize(body)), String.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return responseEntity;
+  }
 
   public static <T> T readEntity(final ResponseEntity<String> responseEntity,
       final TypeReference<T> typeReference) throws Exception {
     final ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(responseEntity.getBody(), typeReference);
   }
+
+  public static String jsonSerilize(final Object obj) throws Exception {
+    final ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(obj);
+  }
+
 }

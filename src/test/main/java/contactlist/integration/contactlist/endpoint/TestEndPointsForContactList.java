@@ -1,7 +1,8 @@
-package contactlist.integration.get;
+package contactlist.integration.contactlist.endpoint;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import contactlist.integration.IntegrationTestUtils;
+import contactlist.model.request.ContactlistRequest;
 import contactlist.model.response.ContactlistResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,6 +80,21 @@ public class TestEndPointsForContactList {
     ResponseEntity<String> responseEntity = IntegrationTestUtils.doDelete("/contactlist/2");
     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     assertFalse(responseEntity.hasBody());
+  }
+
+  public void testSuccessFullCreate() throws Exception{
+    final ContactlistRequest request = new ContactlistRequest();
+    request.setName("tobecreated");
+    ResponseEntity<String> responseEntity = IntegrationTestUtils.doPost("/contactlist", request);
+    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    assertFalse(responseEntity.hasBody());
+
+    responseEntity = IntegrationTestUtils.doGet(responseEntity.getHeaders().getFirst("location"));
+    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    final ContactlistResponse response = IntegrationTestUtils
+        .readEntity(responseEntity, new TypeReference<ContactlistResponse>() {
+        });
+    assertEquals(response.getName(), "tobecreated");
   }
 
 }

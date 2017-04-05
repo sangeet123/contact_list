@@ -14,7 +14,7 @@ public interface ContactListService {
 
   List<ContactlistResponse> get(final Long userId, final Pageable pageable);
 
-  ContactlistResponse create(final ContactlistRequest contactlistRequestRequest);
+  ContactlistResponse create(final Long userId, final ContactlistRequest contactlistRequestRequest);
 
   ContactlistResponse update(final ContactlistRequest contactlistRequestRequest);
 
