@@ -20,5 +20,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
     testEndPointsForContactList.testSuccessFullDeleteById();
     testEndPointsForContactList.testDeleteByIdNotFound();
     testEndPointsForContactList.testSuccessFullCreate();
+    testEndPointsForContactList.testBadContactlistPost();
+    testEndPointsForContactList.testContactlistPostContactlistAlreadyExists();
   }
 }

@@ -20,7 +20,8 @@ create table contactlist (
     userid INT,
     name VARCHAR(30),
     id INT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY(id));
+    PRIMARY KEY(id),
+    CONSTRAINT UC_contactlist UNIQUE (name,userid));
 
 create table contact(
     id INT NOT NULL AUTO_INCREMENT,
