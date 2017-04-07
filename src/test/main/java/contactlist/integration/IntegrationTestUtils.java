@@ -87,7 +87,7 @@ import java.util.Arrays;
     try {
       responseEntity = restTemplate
           .exchange(endPoint, HttpMethod.POST, prepareHttpEntityForPutAndPost(jsonSerilize(body)),
-              String.class,params);
+              String.class, params);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -100,15 +100,16 @@ import java.util.Arrays;
     ResponseEntity<String> responseEntity = null;
     try {
       responseEntity = restTemplate
-          .exchange(endPoint, HttpMethod.PUT, prepareHttpEntityForPutAndPost(jsonSerilize(body)),String.class,params);
+          .exchange(endPoint, HttpMethod.PUT, prepareHttpEntityForPutAndPost(jsonSerilize(body)),
+              String.class, params);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return responseEntity;
   }
 
-  public static <T> T readEntity(final String body,
-      final TypeReference<T> typeReference) throws Exception {
+  public static <T> T readEntity(final String body, final TypeReference<T> typeReference)
+      throws Exception {
     final ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(body, typeReference);
   }

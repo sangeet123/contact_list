@@ -24,7 +24,7 @@ create table contactlist (
     PRIMARY KEY(id),
     CONSTRAINT UK_contactlistname UNIQUE (name,userid));
 
-create table contact(
+create table contacts(
     id INT NOT NULL AUTO_INCREMENT,
     contactlistid INT,
     firstname VARCHAR(30),

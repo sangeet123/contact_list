@@ -1,6 +1,6 @@
 package contactlist.repository;
 
-import contactlist.entity.Contactlist;
+import contactlist.entity.ContactList;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,15 +14,13 @@ import java.util.List;
 /**
  * Created by sangeet on 4/1/2017.
  */
-@Transactional()
-@Repository()
-public interface ContactListRepository extends PagingAndSortingRepository<Contactlist, Long> {
-  Contactlist findByIdAndUserid(final Long id, final Long userid);
+@Transactional() @Repository() public interface ContactListRepository
+    extends PagingAndSortingRepository<ContactList, Long> {
+  ContactList findByIdAndUserid(final Long id, final Long userid);
 
-  List<Contactlist> findByUserid(final Long userid, final Pageable pageable);
+  List<ContactList> findByUserid(final Long userid, final Pageable pageable);
 
-  @Modifying()
-  @Query("delete from contactlist where id= :id and userid= :userid")
-  Integer removeByIdAndUserid(@Param("id") final Long id, @Param("userid")final Long userid);
+  @Modifying() @Query("delete from contactlist where id= :id and userid= :userid") Integer removeByIdAndUserid(
+      @Param("id") final Long id, @Param("userid") final Long userid);
 
 }

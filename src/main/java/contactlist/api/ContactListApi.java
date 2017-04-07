@@ -1,7 +1,7 @@
 package contactlist.api;
 
-import contactlist.model.request.ContactlistRequest;
-import contactlist.model.response.ContactlistResponse;
+import contactlist.model.request.ContactListRequest;
+import contactlist.model.response.ContactListResponse;
 import contactlist.service.ContactListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -22,32 +22,32 @@ import java.util.List;
 
   @Autowired() private ContactListService contactListService;
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.GET) public @ResponseBody() ContactlistResponse get(
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET) public @ResponseBody() ContactListResponse get(
       @PathVariable Long id, final HttpServletRequest request) {
     final Long userId = (Long) request.getAttribute("userId");
     return contactListService.findByIdAndUserId(id, userId);
   }
 
-  @RequestMapping(method = RequestMethod.GET) public @ResponseBody() List<ContactlistResponse> get(
+  @RequestMapping(method = RequestMethod.GET) public @ResponseBody() List<ContactListResponse> get(
       final HttpServletRequest request, final Pageable pageable) {
     final Long userId = (Long) request.getAttribute("userId");
     return contactListService.get(userId, pageable);
   }
 
   @RequestMapping(method = RequestMethod.POST) public @ResponseBody() void create(
-      @RequestBody() @Valid() final ContactlistRequest contactlistRequest,
+      @RequestBody() @Valid() final ContactListRequest contactListRequest,
       final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
     final Long userId = (Long) httpServletRequest.getAttribute("userId");
-    final ContactlistResponse response = contactListService.create(userId, contactlistRequest);
-    httpServletResponse.setHeader("location","/contactlist/"+response.getId());
+    final ContactListResponse response = contactListService.create(userId, contactListRequest);
+    httpServletResponse.setHeader("location", "/contactlist/" + response.getId());
     httpServletResponse.setStatus(HttpStatus.CREATED.value());
   }
 
-  @RequestMapping(value = "/{id}",method = RequestMethod.PUT) public void update(@PathVariable Long id,
-      @RequestBody() @Valid() final ContactlistRequest contactlistRequest,
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT) public void update(
+      @PathVariable Long id, @RequestBody() @Valid() final ContactListRequest contactListRequest,
       final HttpServletRequest request, final HttpServletResponse httpServletResponse) {
     final Long userId = (Long) request.getAttribute("userId");
-    contactListService.update(id,userId, contactlistRequest);
+    contactListService.update(id, userId, contactListRequest);
     httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
   }
 

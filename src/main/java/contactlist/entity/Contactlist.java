@@ -7,18 +7,17 @@ import java.util.Collection;
 /**
  * Created by sangeet on 3/11/2017.
  */
-@Entity(name = "contactlist")
-@Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = { "name", "userid" }) }) public class Contactlist
+@Entity(name = "contactlist") @Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = { "name", "userid" }) }) public class ContactList
     implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
   @Column(name = "userid", nullable = false) private Long userid;
   @Column(name = "name", nullable = false) private String name;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "contactlist", targetEntity = Contact.class,
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "contactList", targetEntity = Contacts.class,
       fetch = FetchType.LAZY) private Collection contacts;
 
-  public Contactlist() {
+  public ContactList() {
   }
 
   public Long getId() {
@@ -54,7 +53,7 @@ import java.util.Collection;
   }
 
   @Override public String toString() {
-    return "ContactlistRequest{" +
+    return "ContactList{" +
         "id=" + id +
         ", userid=" + userid +
         ", name='" + name + '\'' +

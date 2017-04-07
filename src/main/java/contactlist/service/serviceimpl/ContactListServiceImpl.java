@@ -1,8 +1,8 @@
 package contactlist.service.serviceimpl;
 
-import contactlist.entity.Contactlist;
-import contactlist.model.request.ContactlistRequest;
-import contactlist.model.response.ContactlistResponse;
+import contactlist.entity.ContactList;
+import contactlist.model.request.ContactListRequest;
+import contactlist.model.response.ContactListResponse;
 import contactlist.repository.ContactListRepository;
 import contactlist.service.ContactListService;
 import exceptions.NotFoundException;
@@ -23,39 +23,38 @@ import java.util.List;
   private static final Logger LOGGER = LoggerFactory.getLogger(ContactListServiceImpl.class);
   @Autowired() private ContactListRepository contactListRepository;
 
-  private Contactlist getContactList(final Long id, final Long userId) {
-    Contactlist contactList = contactListRepository.findByIdAndUserid(id, userId);
+  private ContactList getContactList(final Long id, final Long userId) {
+    ContactList contactList = contactListRepository.findByIdAndUserid(id, userId);
     if (contactList == null) {
       throw new NotFoundException("contact list with id " + id + " not found");
     }
     return contactList;
   }
 
-  private ContactlistResponse save(final Contactlist contactlist){
-    contactListRepository.save(contactlist);
-    final ContactlistResponse contactlistResponse = new ContactlistResponse();
-    contactlistResponse.setId(contactlist.getId());
-    contactlistResponse.setName(contactlist.getName());
-    return contactlistResponse;
+  private ContactListResponse save(final ContactList contactList) {
+    contactListRepository.save(contactList);
+    final ContactListResponse contactListResponse = new ContactListResponse();
+    contactListResponse.setId(contactList.getId());
+    contactListResponse.setName(contactList.getName());
+    return contactListResponse;
   }
 
-  @Override() public ContactlistResponse findByIdAndUserId(final Long id, final Long userId) {
-    final Contactlist contactList = getContactList(id, userId);
-    final ContactlistResponse contactListResponse = new ContactlistResponse();
+  @Override() public ContactListResponse findByIdAndUserId(final Long id, final Long userId) {
+    final ContactList contactList = getContactList(id, userId);
+    final ContactListResponse contactListResponse = new ContactListResponse();
     contactListResponse.setName(contactList.getName());
     contactListResponse.setId(contactList.getId());
     return contactListResponse;
   }
 
-  @Override public List<ContactlistResponse> get(final Long userId, final Pageable pageable) {
-    Iterable<contactlist.entity.Contactlist> contactLists = contactListRepository
-        .findByUserid(userId, pageable);
-    final List<ContactlistResponse> contactListsResponse = new ArrayList<>();
+  @Override public List<ContactListResponse> get(final Long userId, final Pageable pageable) {
+    Iterable<ContactList> contactLists = contactListRepository.findByUserid(userId, pageable);
+    final List<ContactListResponse> contactListsResponse = new ArrayList<>();
     if (contactLists == null) {
       return contactListsResponse;
     }
     contactLists.iterator().forEachRemaining(contactlist -> {
-      final ContactlistResponse ctlist = new ContactlistResponse();
+      final ContactListResponse ctlist = new ContactListResponse();
       ctlist.setId(contactlist.getId());
       ctlist.setName(contactlist.getName());
       contactListsResponse.add(ctlist);
@@ -63,18 +62,18 @@ import java.util.List;
     return contactListsResponse;
   }
 
-  @Override public ContactlistResponse create(final Long userId,
-      ContactlistRequest contactlistRequestRequest) {
-    Contactlist contactlist = new Contactlist();
-    contactlist.setUserid(userId);
-    contactlist.setName(contactlistRequestRequest.getName());
-    return save(contactlist);
+  @Override public ContactListResponse create(final Long userId,
+      ContactListRequest contactListRequestRequest) {
+    ContactList contactList = new ContactList();
+    contactList.setUserid(userId);
+    contactList.setName(contactListRequestRequest.getName());
+    return save(contactList);
   }
 
-  @Override public ContactlistResponse update(final Long id, final Long userid,
-      ContactlistRequest contactlistRequestRequest) {
-    Contactlist contactList = getContactList(id, userid);
-    contactList.setName(contactlistRequestRequest.getName());
+  @Override public ContactListResponse update(final Long id, final Long userid,
+      ContactListRequest contactListRequestRequest) {
+    ContactList contactList = getContactList(id, userid);
+    contactList.setName(contactListRequestRequest.getName());
     return save(contactList);
   }
 

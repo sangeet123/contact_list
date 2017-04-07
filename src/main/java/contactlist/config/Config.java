@@ -7,11 +7,9 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by sangeet on 4/7/2017.
  */
-@Configuration("contactlist-config")
-public class Config {
+@Configuration("contactlist-config") public class Config {
 
-  @Bean()
-  public ConstraintVoilationMapper getMapper(){
+  @Bean() public ConstraintVoilationMapper getMapper() {
     return new ConstraintVoilationMapper();
   }
 }
