@@ -43,11 +43,12 @@ import java.util.List;
     httpServletResponse.setStatus(HttpStatus.CREATED.value());
   }
 
-  @RequestMapping(method = RequestMethod.PUT) public @ResponseBody() ContactlistResponse update(
+  @RequestMapping(value = "/{id}",method = RequestMethod.PUT) public void update(@PathVariable Long id,
       @RequestBody() @Valid() final ContactlistRequest contactlistRequest,
       final HttpServletRequest request, final HttpServletResponse httpServletResponse) {
     final Long userId = (Long) request.getAttribute("userId");
-    return contactListService.create(userId, contactlistRequest);
+    contactListService.update(id,userId, contactlistRequest);
+    httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE) public @ResponseBody() void delete(
@@ -55,7 +56,7 @@ import java.util.List;
       final HttpServletResponse httpServletResponse) {
     final Long userId = (Long) request.getAttribute("userId");
     contactListService.delete(id, userId);
-    httpServletResponse.setStatus(HttpStatus.ACCEPTED.value());
+    httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
   }
 
 }

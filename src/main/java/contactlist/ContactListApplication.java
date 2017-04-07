@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration() @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class}) @ComponentScan(basePackages = {
     "security*",
-    "contactlist*","exception.mapper","error*"}) @EnableJpaRepositories() @EntityScan() public class ContactListApplication {
+    "contactlist*","exception*","error*"}) @EnableJpaRepositories() @EntityScan() public class ContactListApplication {
   public static void main(String[] args) {
     SpringApplication.run(ContactListApplication.class, args);
     //		String salt = BCrypt.gensalt(12);

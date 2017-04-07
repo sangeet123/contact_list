@@ -5,13 +5,10 @@ import contactlist.model.request.ContactlistRequest;
 import contactlist.model.response.ContactlistResponse;
 import contactlist.repository.ContactListRepository;
 import contactlist.service.ContactListService;
-import error.ValidationErrorInfo;
-import exceptions.ConflictException;
 import exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,15 +21,26 @@ import java.util.List;
  */
 @Transactional() @Service() public class ContactListServiceImpl implements ContactListService {
   private static final Logger LOGGER = LoggerFactory.getLogger(ContactListServiceImpl.class);
-  private static String CONTACTLIST_CONSTRAINT_VOILATION_MESSAGE = "Contactlist exists.";
   @Autowired() private ContactListRepository contactListRepository;
 
-  @Override() public ContactlistResponse findByIdAndUserId(final Long id, final Long userId) {
-    contactlist.entity.Contactlist contactList = contactListRepository
-        .findByIdAndUserid(id, userId);
+  private Contactlist getContactList(final Long id, final Long userId) {
+    Contactlist contactList = contactListRepository.findByIdAndUserid(id, userId);
     if (contactList == null) {
       throw new NotFoundException("contact list with id " + id + " not found");
     }
+    return contactList;
+  }
+
+  private ContactlistResponse save(final Contactlist contactlist){
+    contactListRepository.save(contactlist);
+    final ContactlistResponse contactlistResponse = new ContactlistResponse();
+    contactlistResponse.setId(contactlist.getId());
+    contactlistResponse.setName(contactlist.getName());
+    return contactlistResponse;
+  }
+
+  @Override() public ContactlistResponse findByIdAndUserId(final Long id, final Long userId) {
+    final Contactlist contactList = getContactList(id, userId);
     final ContactlistResponse contactListResponse = new ContactlistResponse();
     contactListResponse.setName(contactList.getName());
     contactListResponse.setId(contactList.getId());
@@ -57,27 +65,17 @@ import java.util.List;
 
   @Override public ContactlistResponse create(final Long userId,
       ContactlistRequest contactlistRequestRequest) {
-
     Contactlist contactlist = new Contactlist();
     contactlist.setUserid(userId);
     contactlist.setName(contactlistRequestRequest.getName());
-    try {
-      contactlist = contactListRepository.save(contactlist);
-    } catch (final DataIntegrityViolationException ex) {
-      LOGGER.error("{}", ex);
-      final ValidationErrorInfo validationErrorInfo = new ValidationErrorInfo();
-      validationErrorInfo
-          .addFieldError("name", String.format(CONTACTLIST_CONSTRAINT_VOILATION_MESSAGE));
-      throw new ConflictException(validationErrorInfo);
-    }
-    final ContactlistResponse contactlistResponse = new ContactlistResponse();
-    contactlistResponse.setId(contactlist.getId());
-    contactlistResponse.setName(contactlist.getName());
-    return contactlistResponse;
+    return save(contactlist);
   }
 
-  @Override public ContactlistResponse update(ContactlistRequest contactlistRequestRequest) {
-    return null;
+  @Override public ContactlistResponse update(final Long id, final Long userid,
+      ContactlistRequest contactlistRequestRequest) {
+    Contactlist contactList = getContactList(id, userid);
+    contactList.setName(contactlistRequestRequest.getName());
+    return save(contactList);
   }
 
   @Override public void delete(Long id, Long userId) {

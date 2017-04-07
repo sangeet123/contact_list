@@ -22,5 +22,8 @@ import org.springframework.test.context.jdbc.SqlGroup;
     testEndPointsForContactList.testSuccessFullCreate();
     testEndPointsForContactList.testBadContactlistPost();
     testEndPointsForContactList.testContactlistPostContactlistAlreadyExists();
+    testEndPointsForContactList.testSuccessContactlistPutContactlistExists();
+    testEndPointsForContactList.testBadContactlistPut();
+    testEndPointsForContactList.testConflictContactlistPut();
   }
 }

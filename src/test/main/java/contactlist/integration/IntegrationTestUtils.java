@@ -58,7 +58,7 @@ import java.util.Arrays;
     return entity;
   }
 
-  public static HttpEntity<String> prepareHttpEntityForPost(final String body) {
+  public static HttpEntity<String> prepareHttpEntityForPutAndPost(final String body) {
     MultiValueMap<String, String> headers = new HttpHeaders();
     headers.put("Authorization", Arrays.asList(accessToken));
     headers.put("Content-Type", Arrays.asList("application/json"));
@@ -86,17 +86,31 @@ import java.util.Arrays;
     ResponseEntity<String> responseEntity = null;
     try {
       responseEntity = restTemplate
-          .exchange(endPoint, HttpMethod.POST, prepareHttpEntityForPost(jsonSerilize(body)), String.class);
+          .exchange(endPoint, HttpMethod.POST, prepareHttpEntityForPutAndPost(jsonSerilize(body)),
+              String.class,params);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return responseEntity;
   }
 
-  public static <T> T readEntity(final ResponseEntity<String> responseEntity,
+  public static ResponseEntity<String> doPut(final String uri, final Object body,
+      final String... params) {
+    final String endPoint = getEndPoint(uri);
+    ResponseEntity<String> responseEntity = null;
+    try {
+      responseEntity = restTemplate
+          .exchange(endPoint, HttpMethod.PUT, prepareHttpEntityForPutAndPost(jsonSerilize(body)),String.class,params);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return responseEntity;
+  }
+
+  public static <T> T readEntity(final String body,
       final TypeReference<T> typeReference) throws Exception {
     final ObjectMapper mapper = new ObjectMapper();
-    return mapper.readValue(responseEntity.getBody(), typeReference);
+    return mapper.readValue(body, typeReference);
   }
 
   public static String jsonSerilize(final Object obj) throws Exception {

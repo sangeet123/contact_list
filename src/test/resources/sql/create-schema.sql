@@ -1,3 +1,4 @@
+DROP database IF EXISTS `integrationtestcontactlist`;
 create database `integrationtestcontactlist`;
 use integrationtestcontactlist;
 CREATE TABLE users(
@@ -21,7 +22,7 @@ create table contactlist (
     name VARCHAR(30),
     id INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(id),
-    CONSTRAINT UC_contactlist UNIQUE (name,userid));
+    CONSTRAINT UK_contactlistname UNIQUE (name,userid));
 
 create table contact(
     id INT NOT NULL AUTO_INCREMENT,

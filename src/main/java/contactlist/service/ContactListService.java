@@ -16,7 +16,7 @@ public interface ContactListService {
 
   ContactlistResponse create(final Long userId, final ContactlistRequest contactlistRequestRequest);
 
-  ContactlistResponse update(final ContactlistRequest contactlistRequestRequest);
+  ContactlistResponse update(final Long id,final Long userId, final ContactlistRequest contactlistRequestRequest);
 
   void delete(final Long id, final Long userId);
 }
