@@ -7,7 +7,10 @@ import java.util.Collection;
 /**
  * Created by sangeet on 3/11/2017.
  */
-@Entity(name = "contactlist") public class Contactlist implements Serializable {
+@Entity(name = "contactlist")
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = { "name", "userid" }) }) public class Contactlist
+    implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
   @Column(name = "userid", nullable = false) private Long userid;
