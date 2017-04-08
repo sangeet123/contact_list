@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Created by sangeet on 4/4/2017.
  */
-@Entity(name = "contact") public class Contact implements Serializable {
+@Entity(name = "contacts") public class Contacts implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
@@ -21,9 +21,9 @@ import java.io.Serializable;
 
   @Column(name = "phonenumber") private String phoneNumber;
 
-  @ManyToOne(optional = false) @JoinColumn(name = "contactlist", referencedColumnName = "id") private Contactlist contactlist;
+  @ManyToOne(optional = false) @JoinColumn(name = "contactlist", referencedColumnName = "id") private ContactList contactList;
 
-  public Contact() {
+  public Contacts() {
   }
 
   public Long getId() {
@@ -74,16 +74,16 @@ import java.io.Serializable;
     this.phoneNumber = phoneNumber;
   }
 
-  public Contactlist getContactlist() {
-    return contactlist;
+  public ContactList getContactList() {
+    return contactList;
   }
 
-  public void setContactlist(Contactlist contactlist) {
-    this.contactlist = contactlist;
+  public void setContactList(final ContactList contactList) {
+    this.contactList = contactList;
   }
 
   @Override public String toString() {
-    return "Contact{" +
+    return "Contacts{" +
 
         "id=" + id +
         ", contactListId=" + contactListId +

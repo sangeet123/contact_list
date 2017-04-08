@@ -1,7 +1,7 @@
 package contactlist.service;
 
-import contactlist.model.request.ContactlistRequest;
-import contactlist.model.response.ContactlistResponse;
+import contactlist.model.request.ContactListRequest;
+import contactlist.model.response.ContactListResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -10,13 +10,14 @@ import java.util.List;
  * Created by sangeet on 4/1/2017.
  */
 public interface ContactListService {
-  ContactlistResponse findByIdAndUserId(final Long id, final Long userId);
+  ContactListResponse findByIdAndUserId(final Long id, final Long userId);
 
-  List<ContactlistResponse> get(final Long userId, final Pageable pageable);
+  List<ContactListResponse> get(final Long userId, final Pageable pageable);
 
-  ContactlistResponse create(final Long userId, final ContactlistRequest contactlistRequestRequest);
+  ContactListResponse create(final Long userId, final ContactListRequest contactListRequestRequest);
 
-  ContactlistResponse update(final ContactlistRequest contactlistRequestRequest);
+  ContactListResponse update(final Long id, final Long userId,
+      final ContactListRequest contactListRequestRequest);
 
   void delete(final Long id, final Long userId);
 }

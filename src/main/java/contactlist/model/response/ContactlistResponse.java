@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Created by sangeet on 3/11/2017.
  */
-public class ContactlistResponse {
+public class ContactListResponse {
   private Long id;
   private String name;
 
@@ -22,7 +22,7 @@ public class ContactlistResponse {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -33,7 +33,7 @@ public class ContactlistResponse {
     if (o == null || getClass() != o.getClass())
       return false;
 
-    ContactlistResponse that = (ContactlistResponse) o;
+    ContactListResponse that = (ContactListResponse) o;
 
     return new EqualsBuilder().append(getId(), that.getId()).append(getName(), that.getName())
         .isEquals();
@@ -44,7 +44,7 @@ public class ContactlistResponse {
   }
 
   @Override() public String toString() {
-    return "ContactlistResponse{" +
+    return "ContactListResponse{" +
         "id=" + id +
         ", name='" + name + '\'' +
         '}';
