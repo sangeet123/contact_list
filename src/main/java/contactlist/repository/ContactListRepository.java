@@ -23,4 +23,7 @@ import java.util.List;
   @Modifying() @Query("delete from contactlist where id= :id and userid= :userid") Integer removeByIdAndUserid(
       @Param("id") final Long id, @Param("userid") final Long userid);
 
+  @Query("select count(c)>0 from contactlist c WHERE c.userid= :userId AND c.id= :contactListId")
+  boolean exist(@Param("userId") final Long userId, @Param("contactListId") final Long contactListId);
+
 }
