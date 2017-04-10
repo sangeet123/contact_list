@@ -1,5 +1,6 @@
 package contactlist.api;
 
+import contactlist.model.request.ContactRequest;
 import contactlist.model.response.ContactResponse;
 import contactlist.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -30,15 +32,15 @@ import java.util.List;
     return contactService.get(contactlistid, pageable);
   }
 
-  //  @RequestMapping(method = RequestMethod.POST) public @ResponseBody() void create(
-  //      @RequestBody() @Valid() final ContactListRequest contactListRequest,
-  //      final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-  //    final Long userId = (Long) httpServletRequest.getAttribute("userId");
-  //    final ContactListResponse response = contactListService.create(userId, contactListRequest);
-  //    httpServletResponse.setHeader("location", "/contactlist/" + response.getId());
-  //    httpServletResponse.setStatus(HttpStatus.CREATED.value());
-  //  }
-  //
+  @RequestMapping(method = RequestMethod.POST) public @ResponseBody() void create(
+      @RequestBody() @Valid() final ContactRequest contactListRequest,
+      @PathVariable Long contactlistid, final HttpServletRequest httpServletRequest,
+      final HttpServletResponse httpServletResponse) {
+    final ContactResponse response = contactService.create(contactlistid, contactListRequest);
+    httpServletResponse.setHeader("location", "/contact/" + contactlistid + "/" + response.getId());
+    httpServletResponse.setStatus(HttpStatus.CREATED.value());
+  }
+
   //  @RequestMapping(value = "/{id}", method = RequestMethod.PUT) public void update(
   //      @PathVariable Long id, @RequestBody() @Valid() final ContactListRequest contactListRequest,
   //      final HttpServletRequest request, final HttpServletResponse httpServletResponse) {

@@ -1,5 +1,6 @@
 package contactlist.service;
 
+import contactlist.model.request.ContactRequest;
 import contactlist.model.response.ContactResponse;
 import org.springframework.data.domain.Pageable;
 
@@ -13,5 +14,7 @@ public interface ContactService {
 
   List<ContactResponse> get(final Long contactListId, final Pageable pageable);
 
-  public void delete(final Long contactListId, final Long contactId);
+  void delete(final Long contactListId, final Long contactId);
+
+  ContactResponse create(final Long contactListId, final ContactRequest contactRequest);
 }

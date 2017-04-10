@@ -1,4 +1,4 @@
-package contactlist.integration.contactlist.endpoints.contact.get.id;
+package contactlist.integration.contactlist.endpoints.id.contact.id;
 
 import contactlist.integration.IntegrationTestConfigurer;
 import contactlist.integration.IntegrationTestUtils;
