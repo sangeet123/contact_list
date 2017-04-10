@@ -4,11 +4,13 @@ package contactlist.model.response;
  * Created by sangeet on 4/4/2017.
  */
 public class ContactResponse {
+  private Long contactListId;
+
   private Long id;
 
   private String firstName;
 
-  private String lastname;
+  private String lastName;
 
   private String email;
 
@@ -17,12 +19,20 @@ public class ContactResponse {
   public ContactResponse() {
   }
 
-  public Long getContactListId() {
+  public Long getId() {
     return id;
   }
 
-  public void setContactListId(final Long id) {
+  public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getContactListId() {
+    return contactListId;
+  }
+
+  public void setContactListId(final Long contactListId) {
+    this.contactListId = contactListId;
   }
 
   public String getFirstName() {
@@ -33,12 +43,12 @@ public class ContactResponse {
     this.firstName = firstName;
   }
 
-  public String getLastname() {
-    return lastname;
+  public String getLastName() {
+    return lastName;
   }
 
-  public void setLastname(final String lastname) {
-    this.lastname = lastname;
+  public void setLastName(final String lastName) {
+    this.lastName = lastName;
   }
 
   public String getEmail() {
@@ -61,7 +71,7 @@ public class ContactResponse {
     return "ContactResponse{" +
         ", id=" + id +
         ", firstName='" + firstName + '\'' +
-        ", lastname='" + lastname + '\'' +
+        ", lastName='" + lastName + '\'' +
         ", email='" + email + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
         '}';

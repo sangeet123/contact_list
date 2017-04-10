@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "contactListId": 1,
+    "firstName": "abc1",
+    "lastName": "last",
+    "email": "abc1_last@gmail.com",
+    "phoneNumber": "(245)-312-2221"
+  },
+  {
+    "id": 2,
+    "contactListId": 1,
+    "firstName": "abc2",
+    "lastName": "last",
+    "email": "abc2_last@gmail.com",
+    "phoneNumber": "(245)-312-2222"
+  },
+  {
+    "id": 3,
+    "contactListId": 1,
+    "firstName": "abc3",
+    "lastName": "last",
+    "email": "abc3_last@gmail.com",
+    "phoneNumber": "(245)-312-2223"
+  },
+  {
+    "id": 4,
+    "contactListId": 1,
+    "firstName": "abc4",
+    "lastName": "last",
+    "email": "abc4_last@gmail.com",
+    "phoneNumber": "(245)-312-2224"
+  },
+  {
+    "id": 5,
+    "contactListId": 1,
+    "firstName": "abc5",
+    "lastName": "last",
+    "email": "abc5_last@gmail.com",
+    "phoneNumber": "(245)-312-2225"
+  },
+  {
+    "id": 6,
+    "contactListId": 1,
+    "firstName": "abc6",
+    "lastName": "last",
+    "email": "abc6_last@gmail.com",
+    "phoneNumber": "(245)-312-2226"
+  },
+  {
+    "id": 7,
+    "contactListId": 1,
+    "firstName": "abc7",
+    "lastName": "last",
+    "email": "abc7_last@gmail.com",
+    "phoneNumber": "(245)-312-2227"
+  },
+  {
+    "id": 8,
+    "contactListId": 1,
+    "firstName": "abc8",
+    "lastName": "last",
+    "email": "abc8_last@gmail.com",
+    "phoneNumber": "(245)-312-2228"
+  },
+  {
+    "id": 9,
+    "contactListId": 1,
+    "firstName": "abc9",
+    "lastName": "last",
+    "email": "abc9_last@gmail.com",
+    "phoneNumber": "(245)-312-2229"
+  },
+  {
+    "id": 10,
+    "contactListId": 1,
+    "firstName": "abc10",
+    "lastName": "last",
+    "email": "abc10_last@gmail.com",
+    "phoneNumber": "(245)-312-2210"
+  },
+  {
+    "id": 11,
+    "contactListId": 1,
+    "firstName": "abc11",
+    "lastName": "last",
+    "email": "abc11_last@gmail.com",
+    "phoneNumber": "(245)-312-2211"
+  },
+  {
+    "id": 12,
+    "contactListId": 1,
+    "firstName": "abc12",
+    "lastName": "last",
+    "email": "abc12_last@gmail.com",
+    "phoneNumber": "(245)-312-2212"
+  }
+]
