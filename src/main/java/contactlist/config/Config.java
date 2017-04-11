@@ -17,7 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
   }
 
   @Override() public void addInterceptors(final InterceptorRegistry registry) {
-    registry.addInterceptor(contactVerifier()).addPathPatterns("/contact/**");;
+    registry.addInterceptor(contactVerifier()).addPathPatterns("/contact/**");
+    ;
   }
 
   @Bean() public ContactVerifier contactVerifier() {

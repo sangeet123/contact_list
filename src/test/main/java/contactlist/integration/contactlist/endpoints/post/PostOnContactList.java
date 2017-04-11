@@ -22,14 +22,13 @@ import static org.hamcrest.Matchers.*;
     "classpath:sql/create-schema.sql", "classpath:sql/create-user.sql",
     "classpath:sql/create-contactlist.sql" }),
     @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = {
-        "classpath:sql/drop-schema.sql" }) }) public class PostOnContactList extends
-    IntegrationTestConfigurer {
+        "classpath:sql/drop-schema.sql" }) }) public class PostOnContactList
+    extends IntegrationTestConfigurer {
 
   private final static String CONTACTLIST_ENTRY_ENDPOINT = "/contactlist";
   private final static String CONTACTLIST_SPECIFIC_RESOURCE_ENDPOINT = "/contactlist/{id}";
 
-  @Test()
-  public void test_create_contactlist_with_name_tobecreated() throws Exception {
+  @Test() public void test_create_contactlist_with_name_tobecreated() throws Exception {
     Map<String, String> map = new HashMap<>();
     map.put("name", "tobecreated");
 
@@ -61,8 +60,7 @@ import static org.hamcrest.Matchers.*;
         body("id", equalTo(Integer.parseInt(id)));
   }
 
-  @Test()
-  public void test_contact_list_with_empty_contactlist_name() throws Exception {
+  @Test() public void test_contact_list_with_empty_contactlist_name() throws Exception {
     Map<String, String> map = new HashMap<>();
     map.put("name", "");
 
@@ -75,13 +73,12 @@ import static org.hamcrest.Matchers.*;
         then().
         contentType(JSON).
         statusCode(HttpStatus.BAD_REQUEST.value()).
-        body("context",equalTo("contactlist")).
-        body("fieldErrors.field",contains("name")).
-        body("fieldErrors.message",contains("Value is required."));
+        body("context", equalTo("contactlist")).
+        body("fieldErrors.field", contains("name")).
+        body("fieldErrors.message", contains("Value is required."));
   }
 
-  @Test()
-  public void test_contact_list_with_no_contactlist_name() throws Exception {
+  @Test() public void test_contact_list_with_no_contactlist_name() throws Exception {
     Map<String, String> map = new HashMap<>();
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
@@ -92,14 +89,12 @@ import static org.hamcrest.Matchers.*;
         then().
         contentType(JSON).
         statusCode(HttpStatus.BAD_REQUEST.value()).
-        body("context",equalTo("contactlist")).
-        body("fieldErrors.field",contains("name")).
-        body("fieldErrors.message",contains("Value is required."));
+        body("context", equalTo("contactlist")).
+        body("fieldErrors.field", contains("name")).
+        body("fieldErrors.message", contains("Value is required."));
   }
 
-
-  @Test()
-  public void test_contact_list_with_name_Friends_that_exist() throws Exception {
+  @Test() public void test_contact_list_with_name_Friends_that_exist() throws Exception {
     Map<String, String> map = new HashMap<>();
     map.put("name", "Friends");
     given().
@@ -111,8 +106,8 @@ import static org.hamcrest.Matchers.*;
         then().
         contentType(JSON).
         statusCode(HttpStatus.CONFLICT.value()).
-        body("context",equalTo("contactlist")).
-        body("fieldErrors.field",contains("name")).
-        body("fieldErrors.message",contains("ContactList with name already exists."));
+        body("context", equalTo("contactlist")).
+        body("fieldErrors.field", contains("name")).
+        body("fieldErrors.message", contains("ContactList with name already exists."));
   }
 }

@@ -17,15 +17,14 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
     "classpath:sql/create-schema.sql", "classpath:sql/create-user.sql",
     "classpath:sql/create-contactlist.sql", "classpath:sql/create-contacts.sql" }),
     @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = {
-        "classpath:sql/drop-schema.sql" }) })
-public class DeleteContactById extends IntegrationTestConfigurer {
+        "classpath:sql/drop-schema.sql" }) }) public class DeleteContactById
+    extends IntegrationTestConfigurer {
   private final static String CONTACT_SPECIFIC_RESOURCE_ENDPOINT = "/contact/{contactlistid}/{id}";
 
-  @Test()
-  public void test_delete_by_id_12_that_does_not_exist() throws Exception {
+  @Test() public void test_delete_by_id_12_that_does_not_exist() throws Exception {
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
-        pathParam("contactlistid",1).
+        pathParam("contactlistid", 1).
         pathParam("id", 14).
         when().
         delete(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
@@ -35,11 +34,10 @@ public class DeleteContactById extends IntegrationTestConfigurer {
         body(isEmptyOrNullString());
   }
 
-  @Test()
-  public void test_delete_by_id_2_that_exists() throws Exception {
+  @Test() public void test_delete_by_id_2_that_exists() throws Exception {
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
-        pathParam("contactlistid",1).
+        pathParam("contactlistid", 1).
         pathParam("id", 2).
         when().
         delete(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
@@ -50,7 +48,7 @@ public class DeleteContactById extends IntegrationTestConfigurer {
 
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
-        pathParam("contactlistid",1).
+        pathParam("contactlistid", 1).
         pathParam("id", 2).
         when().
         delete(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).

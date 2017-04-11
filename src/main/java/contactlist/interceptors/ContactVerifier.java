@@ -15,24 +15,24 @@ import java.util.Map;
  * Created by sangeet on 4/9/2017.
  */
 public class ContactVerifier extends HandlerInterceptorAdapter {
-  @Autowired()
-  private ContactListRepository contactListRepository;
+  @Autowired() private ContactListRepository contactListRepository;
 
-  @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    final Map pathVariables = (Map)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-    final String stringId = (String)pathVariables.get("contactlistid");
-    final Long userId = (Long)request.getAttribute("userId");
+  @Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+      Object handler) throws Exception {
+    final Map pathVariables = (Map) request
+        .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+    final String stringId = (String) pathVariables.get("contactlistid");
+    final Long userId = (Long) request.getAttribute("userId");
 
-    if(StringUtils.isEmpty(stringId)){
+    if (StringUtils.isEmpty(stringId)) {
       return true;
     }
-    try{
+    try {
       final Long id = Long.parseLong(stringId);
-      if(contactListRepository.exist(userId, id)){
+      if (contactListRepository.exist(userId, id)) {
         return true;
       }
-    }catch(final NumberFormatException  ex){
+    } catch (final NumberFormatException ex) {
     }
     throw new NotFoundException();
   }
