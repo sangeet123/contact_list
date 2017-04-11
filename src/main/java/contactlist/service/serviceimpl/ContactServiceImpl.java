@@ -34,15 +34,31 @@ import java.util.stream.Collectors;
     return contactResponse;
   }
 
-  @Override public ContactResponse findByContactListIdAndContactId(Long contactListId,
-      Long contactId) {
-    final Contact contact = contactRepository.findByIdAndContactListId(contactListId, contactId);
+  private static Contact mapContactRequestToContact(final Contact contact, final Long contactListId,
+      final ContactRequest contactRequest) {
+    final ContactList contactList = new ContactList();
+    contactList.setId(contactListId);
+    contact.setContactList(contactList);
+    contact.setPhoneNumber(contactRequest.getPhoneNumber());
+    contact.setLastName(contactRequest.getLastName());
+    contact.setFirstName(contactRequest.getFirstName());
+    contact.setEmail(contactRequest.getEmail());
+    return contact;
+  }
+
+  private Contact get(final Long contactListId, final Long contactId) {
+    final Contact contact = contactRepository.findByIdAndContactListId(contactId, contactListId);
     if (contact == null) {
       throw new NotFoundException(
           "contact with id " + contactId + " on contact list with id " + contactListId
               + " is not present");
     }
-    return mapContactToContactResponse(contact);
+    return contact;
+  }
+
+  @Override public ContactResponse findByContactListIdAndContactId(Long contactListId,
+      Long contactId) {
+    return mapContactToContactResponse(get(contactListId, contactId));
   }
 
   @Override public List<ContactResponse> get(Long contactListId, Pageable pageable) {
@@ -66,13 +82,16 @@ import java.util.stream.Collectors;
 
   @Override public ContactResponse create(Long contactListId, ContactRequest contactRequest) {
     final Contact contact = new Contact();
-    final ContactList contactList = new ContactList();
-    contactList.setId(contactListId);
-    contact.setContactList(contactList);
-    contact.setPhoneNumber(contactRequest.getPhoneNumber());
-    contact.setLastName(contactRequest.getLastName());
-    contact.setFirstName(contactRequest.getFirstName());
-    contact.setEmail(contactRequest.getEmail());
-    return mapContactToContactResponse(contactRepository.save(contact));
+    mapContactRequestToContact(contact, contactListId, contactRequest);
+    contactRepository.save(contact);
+    return mapContactToContactResponse(contact);
+  }
+
+  @Override public ContactResponse update(final Long contactListId, final Long contactId,
+      final ContactRequest contactRequest) {
+    Contact contact = get(contactListId, contactId);
+    mapContactRequestToContact(contact, contactListId, contactRequest);
+    contactRepository.save(contact);
+    return mapContactToContactResponse(contact);
   }
 }

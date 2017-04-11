@@ -1,8 +1,7 @@
-package contactlist.integration.contactlist.endpoints.id.contact.post;
+package contactlist.integration.contactlist.endpoints.id.contact.id.put;
 
 import contactlist.integration.IntegrationTestConfigurer;
 import contactlist.integration.IntegrationTestUtils;
-import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -25,39 +24,34 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
     "classpath:sql/create-schema.sql", "classpath:sql/create-user.sql",
     "classpath:sql/create-contactlist.sql", "classpath:sql/create-contacts.sql" }),
     @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = {
-        "classpath:sql/drop-schema.sql" }) }) public class PostOnContact
-    extends IntegrationTestConfigurer {
-  private final static String CONTACT_ENTRY_ENDPOINT = "/contact/{contactlistid}";
+        "classpath:sql/drop-schema.sql" }) })
+public class PutOnContact extends IntegrationTestConfigurer {
   private final static String CONTACT_SPECIFIC_RESOURCE_ENDPOINT = "/contact/{contactlistid}/{id}";
 
-  @Test() public void test_create_a_valid_contact() throws Exception {
+  @Test() public void test_put_a_valid_contact() throws Exception {
     final Map<String, String> map = new HashMap<>();
     map.put("firstName", "Ramesh");
     map.put("lastName", "Awasti");
     map.put("email", "Ramesh_Awasti@gmail.com");
     map.put("phoneNumber", "2563487777");
 
-    final Response response = given().
+    given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         pathParam("contactlistid", 1).
+        pathParam("id",2).
         contentType("application/json").
         body(map).
         when().
-        post(IntegrationTestUtils.getEndPoint(CONTACT_ENTRY_ENDPOINT));
-
-    response.
+        put(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
         then().
-        statusCode(HttpStatus.CREATED.value()).
+        statusCode(HttpStatus.NO_CONTENT.value()).
         contentType(isEmptyOrNullString()).
         body(isEmptyOrNullString());
-
-    final String location = response.getHeader("location");
-    final String id = location.substring(location.lastIndexOf("/") + 1);
 
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         pathParam("contactlistid", 1).
-        pathParam("id", id).
+        pathParam("id", 2).
         when().
         get(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
         then().
@@ -71,7 +65,7 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
   }
 
   @Test()
-  public void test_post_empty_contact_email() throws Exception {
+  public void test_put_empty_contact_email() throws Exception {
     final Map<String, String> map = new HashMap<>();
     map.put("firstName", "Ramesh");
     map.put("lastName", "Awasti");
@@ -81,10 +75,11 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         pathParam("contactlistid", 1).
+        pathParam("id", 2).
         contentType("application/json").
         body(map).
         when().
-        post(IntegrationTestUtils.getEndPoint(CONTACT_ENTRY_ENDPOINT)).
+        put(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
         then().
         contentType(JSON).
         statusCode(HttpStatus.BAD_REQUEST.value()).
@@ -94,7 +89,7 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
   }
 
   @Test()
-  public void test_post_invalid_contact_email() throws Exception {
+  public void test_put_invalid_contact_email() throws Exception {
     final Map<String, String> map = new HashMap<>();
     map.put("firstName", "Ramesh");
     map.put("lastName", "Awasti");
@@ -104,10 +99,11 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         pathParam("contactlistid", 1).
+        pathParam("id", 2).
         contentType("application/json").
         body(map).
         when().
-        post(IntegrationTestUtils.getEndPoint(CONTACT_ENTRY_ENDPOINT)).
+        put(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
         then().
         contentType(JSON).
         statusCode(HttpStatus.BAD_REQUEST.value()).
@@ -117,7 +113,7 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
   }
 
   @Test()
-  public void test_post_invalid_phone_number() throws Exception {
+  public void test_put_invalid_phone_number() throws Exception {
     final Map<String, String> map = new HashMap<>();
     map.put("firstName", "Ramesh");
     map.put("lastName", "Awasti");
@@ -127,10 +123,11 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         pathParam("contactlistid", 1).
+        pathParam("id", 2).
         contentType("application/json").
         body(map).
         when().
-        post(IntegrationTestUtils.getEndPoint(CONTACT_ENTRY_ENDPOINT)).
+        put(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
         then().
         contentType(JSON).
         statusCode(HttpStatus.BAD_REQUEST.value()).
@@ -140,7 +137,7 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
   }
 
   @Test()
-  public void test_post_invalid_first_name_size_larger_than_30() throws Exception {
+  public void test_put_invalid_first_name_size_larger_than_30() throws Exception {
     final Map<String, String> map = new HashMap<>();
     map.put("firstName", "This is a very large first name and it should not be allowed to be entered into db.");
     map.put("lastName", "Awasti");
@@ -150,10 +147,11 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         pathParam("contactlistid", 1).
+        pathParam("id", 2).
         contentType("application/json").
         body(map).
         when().
-        post(IntegrationTestUtils.getEndPoint(CONTACT_ENTRY_ENDPOINT)).
+        put(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
         then().
         contentType(JSON).
         statusCode(HttpStatus.BAD_REQUEST.value()).
@@ -163,7 +161,7 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
   }
 
   @Test()
-  public void test_post_invalid_last_name_size_larger_than_30() throws Exception {
+  public void test_put_invalid_last_name_size_larger_than_30() throws Exception {
     final Map<String, String> map = new HashMap<>();
     map.put("firstName", "Ramesh");
     map.put("lastName", "This is a very large last name and it should not be allowed to be entered into db.");
@@ -173,10 +171,11 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         pathParam("contactlistid", 1).
+        pathParam("id", 2).
         contentType("application/json").
         body(map).
         when().
-        post(IntegrationTestUtils.getEndPoint(CONTACT_ENTRY_ENDPOINT)).
+        put(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
         then().
         contentType(JSON).
         statusCode(HttpStatus.BAD_REQUEST.value()).
@@ -186,7 +185,7 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
   }
 
   @Test()
-  public void test_post_email_that_already_exists() throws Exception {
+  public void test_put_email_that_already_exists() throws Exception {
     final Map<String, String> map = new HashMap<>();
     map.put("firstName", "Ramesh");
     map.put("lastName", "Awasti");
@@ -196,10 +195,11 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         pathParam("contactlistid", 1).
+        pathParam("id", 2).
         contentType("application/json").
         body(map).
         when().
-        post(IntegrationTestUtils.getEndPoint(CONTACT_ENTRY_ENDPOINT)).
+        put(IntegrationTestUtils.getEndPoint(CONTACT_SPECIFIC_RESOURCE_ENDPOINT)).
         then().
         contentType(JSON).
         statusCode(HttpStatus.CONFLICT.value()).

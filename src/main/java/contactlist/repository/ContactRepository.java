@@ -21,5 +21,5 @@ import java.util.List;
   List<Contact> findByContactListId(final Long contactListId, final Pageable pageable);
 
   @Modifying() @Query("delete from contacts where id= :id and contactlistid= :contactlistid") Integer removeByIdAndContactListId(
-      @Param("id") final Long id, @Param("contactlistid") final Long contactlistid);
+      @Param("contactlistid") final Long contactlistid, @Param("id") final Long id);
 }

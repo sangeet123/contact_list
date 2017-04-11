@@ -22,9 +22,10 @@ import java.util.List;
 
   @Autowired() private ContactService contactService;
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.GET) public @ResponseBody() ContactResponse get(
-      @PathVariable Long contactlistid, @PathVariable Long id, final HttpServletRequest request) {
-    return contactService.findByContactListIdAndContactId(id, contactlistid);
+  @RequestMapping(value = "/{contactId}", method = RequestMethod.GET) public @ResponseBody() ContactResponse get(
+      @PathVariable Long contactlistid, @PathVariable Long contactId,
+      final HttpServletRequest request) {
+    return contactService.findByContactListIdAndContactId(contactlistid, contactId);
   }
 
   @RequestMapping(method = RequestMethod.GET) public @ResponseBody() List<ContactResponse> get(
@@ -41,18 +42,19 @@ import java.util.List;
     httpServletResponse.setStatus(HttpStatus.CREATED.value());
   }
 
-  //  @RequestMapping(value = "/{id}", method = RequestMethod.PUT) public void update(
-  //      @PathVariable Long id, @RequestBody() @Valid() final ContactListRequest contactListRequest,
-  //      final HttpServletRequest request, final HttpServletResponse httpServletResponse) {
-  //    final Long userId = (Long) request.getAttribute("userId");
-  //    contactListService.update(id, userId, contactListRequest);
-  //    httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
-  //  }
-  //
-  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE) public @ResponseBody() void delete(
-      @PathVariable Long contactlistid, @PathVariable Long id, final HttpServletRequest request,
+  @RequestMapping(value = "/{contactId}", method = RequestMethod.PUT) public @ResponseBody() void update(
+      @RequestBody() @Valid() final ContactRequest contactListRequest,
+      @PathVariable Long contactlistid, @PathVariable Long contactId,
+      final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    final ContactResponse response = contactService
+        .update(contactlistid, contactId, contactListRequest);
+    httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
+  }
+
+  @RequestMapping(value = "/{contactId}", method = RequestMethod.DELETE) public @ResponseBody() void delete(
+      @PathVariable Long contactlistid, @PathVariable Long contactId, final HttpServletRequest request,
       final HttpServletResponse httpServletResponse) {
-    contactService.delete(contactlistid, id);
+    contactService.delete(contactlistid, contactId);
     httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
   }
 
