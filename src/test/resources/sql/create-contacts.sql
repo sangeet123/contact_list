@@ -1,0 +1,14 @@
+use integrationtestcontactlist;
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (1,1,"abc1", "last", "abc1_last@gmail.com", "(245)-312-2221");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (2,1,"abc2", "last", "abc2_last@gmail.com", "(245)-312-2222");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (3,1,"abc3", "last", "abc3_last@gmail.com", "(245)-312-2223");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (4,1,"abc4", "last", "abc4_last@gmail.com", "(245)-312-2224");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (5,1,"abc5", "last", "abc5_last@gmail.com", "(245)-312-2225");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (6,1,"abc6", "last", "abc6_last@gmail.com", "(245)-312-2226");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (7,1,"abc7", "last", "abc7_last@gmail.com", "(245)-312-2227");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (8,1,"abc8", "last", "abc8_last@gmail.com", "(245)-312-2228");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (9,1,"abc9", "last", "abc9_last@gmail.com", "(245)-312-2229");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (10,1,"abc10", "last", "abc10_last@gmail.com", "(245)-312-2210");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (11,1,"abc11", "last", "abc11_last@gmail.com", "(245)-312-2211");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (12,1,"abc12", "last", "abc12_last@gmail.com", "(245)-312-2212");
+insert into contacts(id,contactlistid, firstname, lastname, email, phonenumber) values (15,5,"abc12", "last", "abc12_last3@gmail.com", "(245)-312-2212");

@@ -22,8 +22,8 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
         "classpath:sql/drop-schema.sql" }) }) public class GetContactLists
     extends IntegrationTestConfigurer {
   private final static String CONTACTLIST_ENTRY_ENDPOINT = "/contactlist";
-  @Test()
-  public void test_get_all_contactlists() throws Exception {
+
+  @Test() public void test_get_all_contactlists() throws Exception {
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         when().
@@ -34,8 +34,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
         body("id", containsInAnyOrder(1, 2, 3));
   }
 
-  @Test()
-  public void test_get_all_contactlists_on_page_0_with_size_2() throws Exception{
+  @Test() public void test_get_all_contactlists_on_page_0_with_size_2() throws Exception {
     given().
         header("Authorization", IntegrationTestUtils.getAccessToken()).
         queryParam("page", 0).

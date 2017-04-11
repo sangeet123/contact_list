@@ -29,8 +29,9 @@ create table contacts(
     contactlistid INT,
     firstname VARCHAR(30),
     lastname VARCHAR(30),
-    email VARCHAR(30),
+    email VARCHAR(30) NOT NULL,
     phonenumber VARCHAR(30),
     PRIMARY KEY(id),
+    CONSTRAINT UK_emailInContactList UNIQUE (email,contactlistid),
     FOREIGN KEY (contactlistid) REFERENCES contactlist(id));
 

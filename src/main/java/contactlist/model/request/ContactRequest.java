@@ -1,8 +1,10 @@
 package contactlist.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -11,25 +13,15 @@ import javax.validation.constraints.Size;
 public class ContactRequest {
   private static final int MAX_SIZE = 30;
 
-  private Long contactListId;
+  @JsonProperty(value = "firstName") @Size(max = MAX_SIZE) private String firstName;
 
-  @JsonProperty(value = "firstName") @NotNull() @Size(max = MAX_SIZE) private String firstName;
+  @JsonProperty(value = "lastName") @Size(max = MAX_SIZE) private String lastName;
 
-  @JsonProperty(value = "lastName") @NotNull() @Size(max = MAX_SIZE) private String lastname;
+  @JsonProperty(value = "email") @NotEmpty() @Email() private String email;
 
-  @JsonProperty(value = "email") @NotNull() private String email;
-
-  @JsonProperty(value = "phoneNumber") private String phoneNumber;
+  @JsonProperty(value = "phoneNumber") @Pattern(regexp = "^[0-9]{7,15}") private String phoneNumber;
 
   public ContactRequest() {
-  }
-
-  public Long getContactListId() {
-    return contactListId;
-  }
-
-  public void setContactListId(final Long contactListId) {
-    this.contactListId = contactListId;
   }
 
   public String getFirstName() {
@@ -40,12 +32,12 @@ public class ContactRequest {
     this.firstName = firstName;
   }
 
-  public String getLastname() {
-    return lastname;
+  public String getLastName() {
+    return lastName;
   }
 
-  public void setLastname(final String lastname) {
-    this.lastname = lastname;
+  public void setLastName(final String lastName) {
+    this.lastName = lastName;
   }
 
   public String getEmail() {
@@ -66,9 +58,8 @@ public class ContactRequest {
 
   @Override public String toString() {
     return "ContactRequest{" +
-        ", contactListId=" + contactListId +
         ", firstName='" + firstName + '\'' +
-        ", lastname='" + lastname + '\'' +
+        ", lastName='" + lastName + '\'' +
         ", email='" + email + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
         '}';

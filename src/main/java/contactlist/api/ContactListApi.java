@@ -2,14 +2,13 @@ package contactlist.api;
 
 import contactlist.model.request.ContactListRequest;
 import contactlist.model.response.ContactListResponse;
+import contactlist.model.transaction.Transaction;
 import contactlist.service.ContactListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
@@ -23,40 +22,41 @@ import java.util.List;
   @Autowired() private ContactListService contactListService;
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET) public @ResponseBody() ContactListResponse get(
-      @PathVariable Long id, final HttpServletRequest request) {
-    final Long userId = (Long) request.getAttribute("userId");
-    return contactListService.findByIdAndUserId(id, userId);
+      @PathVariable Long id, final Transaction transaction) {
+    final ContactListResponse contactListResponse = contactListService
+        .findByIdAndUserId(id, transaction.getUserIdFromHeader());
+    transaction.setReturnStatus(HttpServletResponse.SC_OK);
+    return contactListResponse;
   }
 
   @RequestMapping(method = RequestMethod.GET) public @ResponseBody() List<ContactListResponse> get(
-      final HttpServletRequest request, final Pageable pageable) {
-    final Long userId = (Long) request.getAttribute("userId");
-    return contactListService.get(userId, pageable);
+      final Pageable pageable, final Transaction transaction) {
+    final List<ContactListResponse> contactListResponses = contactListService
+        .get(transaction.getUserIdFromHeader(), pageable);
+    transaction.setReturnStatus(HttpServletResponse.SC_OK);
+    return contactListResponses;
   }
 
   @RequestMapping(method = RequestMethod.POST) public @ResponseBody() void create(
       @RequestBody() @Valid() final ContactListRequest contactListRequest,
-      final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-    final Long userId = (Long) httpServletRequest.getAttribute("userId");
-    final ContactListResponse response = contactListService.create(userId, contactListRequest);
-    httpServletResponse.setHeader("location", "/contactlist/" + response.getId());
-    httpServletResponse.setStatus(HttpStatus.CREATED.value());
+      final Transaction transaction) {
+    final ContactListResponse response = contactListService
+        .create(transaction.getUserIdFromHeader(), contactListRequest);
+    transaction.setLocationHeader("/contactlist/" + response.getId());
+    transaction.setReturnStatus(HttpServletResponse.SC_CREATED);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT) public void update(
       @PathVariable Long id, @RequestBody() @Valid() final ContactListRequest contactListRequest,
-      final HttpServletRequest request, final HttpServletResponse httpServletResponse) {
-    final Long userId = (Long) request.getAttribute("userId");
-    contactListService.update(id, userId, contactListRequest);
-    httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
+      final Transaction transaction) {
+    contactListService.update(id, transaction.getUserIdFromHeader(), contactListRequest);
+    transaction.setReturnStatus(HttpServletResponse.SC_NO_CONTENT);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE) public @ResponseBody() void delete(
-      @PathVariable Long id, final HttpServletRequest request,
-      final HttpServletResponse httpServletResponse) {
-    final Long userId = (Long) request.getAttribute("userId");
-    contactListService.delete(id, userId);
-    httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
+      @PathVariable Long id, final Transaction transaction) {
+    contactListService.delete(id, transaction.getUserIdFromHeader());
+    transaction.setReturnStatus(HttpServletResponse.SC_NO_CONTENT);
   }
 
 }

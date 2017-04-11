@@ -6,12 +6,12 @@ import java.io.Serializable;
 /**
  * Created by sangeet on 4/4/2017.
  */
-@Entity(name = "contacts") public class Contacts implements Serializable {
+@Entity(name = "contacts") @Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = { "email", "contactlistid" }) }) public class Contact
+    implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
-
-  @Column(name = "contactlistid", nullable = false) private Long contactListId;
 
   @Column(name = "firstname") private String firstName;
 
@@ -21,9 +21,9 @@ import java.io.Serializable;
 
   @Column(name = "phonenumber") private String phoneNumber;
 
-  @ManyToOne(optional = false) @JoinColumn(name = "contactlist", referencedColumnName = "id") private ContactList contactList;
+  @ManyToOne(optional = false) @JoinColumn(name = "contactlistid", referencedColumnName = "id") private ContactList contactList;
 
-  public Contacts() {
+  public Contact() {
   }
 
   public Long getId() {
@@ -34,14 +34,6 @@ import java.io.Serializable;
     this.id = id;
   }
 
-  public Long getContactListId() {
-    return contactListId;
-  }
-
-  public void setContactListId(final Long contactListId) {
-    this.contactListId = contactListId;
-  }
-
   public String getFirstName() {
     return firstName;
   }
@@ -50,11 +42,11 @@ import java.io.Serializable;
     this.firstName = firstName;
   }
 
-  public String getLastname() {
+  public String getLastName() {
     return lastname;
   }
 
-  public void setLastname(final String lastname) {
+  public void setLastName(final String lastname) {
     this.lastname = lastname;
   }
 
@@ -83,10 +75,9 @@ import java.io.Serializable;
   }
 
   @Override public String toString() {
-    return "Contacts{" +
+    return "Contact{" +
 
         "id=" + id +
-        ", contactListId=" + contactListId +
         ", firstName='" + firstName + '\'' +
         ", lastname='" + lastname + '\'' +
         ", email='" + email + '\'' +

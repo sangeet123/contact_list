@@ -14,7 +14,7 @@ import java.util.Collection;
   @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
   @Column(name = "userid", nullable = false) private Long userid;
   @Column(name = "name", nullable = false) private String name;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "contactList", targetEntity = Contacts.class,
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "contactList", targetEntity = Contact.class,
       fetch = FetchType.LAZY) private Collection contacts;
 
   public ContactList() {

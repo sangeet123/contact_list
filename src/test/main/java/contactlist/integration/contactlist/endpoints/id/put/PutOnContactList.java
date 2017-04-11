@@ -21,12 +21,11 @@ import static org.hamcrest.Matchers.*;
     "classpath:sql/create-schema.sql", "classpath:sql/create-user.sql",
     "classpath:sql/create-contactlist.sql" }),
     @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = {
-        "classpath:sql/drop-schema.sql" }) })
-public class PutOnContactList extends IntegrationTestConfigurer {
+        "classpath:sql/drop-schema.sql" }) }) public class PutOnContactList
+    extends IntegrationTestConfigurer {
   private final static String CONTACTLIST_SPECIFIC_RESOURCE_ENDPOINT = "/contactlist/{id}";
 
-  @Test()
-  public void test_put_on_contactlist_with_id_1_that_exists() throws Exception {
+  @Test() public void test_put_on_contactlist_with_id_1_that_exists() throws Exception {
     Map<String, String> map = new HashMap<>();
     map.put("name", "Collegues");
 
@@ -54,9 +53,7 @@ public class PutOnContactList extends IntegrationTestConfigurer {
 
   }
 
-
-  @Test()
-  public void test_contact_list_with_empty_contactlist_name() throws Exception {
+  @Test() public void test_contact_list_with_empty_contactlist_name() throws Exception {
     Map<String, String> map = new HashMap<>();
     map.put("name", "");
 
@@ -70,13 +67,12 @@ public class PutOnContactList extends IntegrationTestConfigurer {
         then().
         statusCode(HttpStatus.BAD_REQUEST.value()).
         contentType(JSON).
-        body("context",equalTo("contactlist")).
-        body("fieldErrors.field",contains("name")).
-        body("fieldErrors.message",contains("Value is required."));
+        body("context", equalTo("contactlist")).
+        body("fieldErrors.field", contains("name")).
+        body("fieldErrors.message", contains("Value is required."));
   }
 
-  @Test()
-  public void test_contact_list_with_no_contactlist_name() throws Exception {
+  @Test() public void test_contact_list_with_no_contactlist_name() throws Exception {
     Map<String, String> map = new HashMap<>();
     given().
         pathParam("id", 2).
@@ -88,14 +84,13 @@ public class PutOnContactList extends IntegrationTestConfigurer {
         then().
         statusCode(HttpStatus.BAD_REQUEST.value()).
         contentType(JSON).
-        body("context",equalTo("contactlist")).
-        body("fieldErrors.field",contains("name")).
-        body("fieldErrors.message",contains("Value is required."));
+        body("context", equalTo("contactlist")).
+        body("fieldErrors.field", contains("name")).
+        body("fieldErrors.message", contains("Value is required."));
   }
 
-
-  @Test()
-  public void test_contact_list_with_name_Others_to_be_changed_to_name_Family_that_exists() throws Exception {
+  @Test() public void test_contact_list_with_name_Others_to_be_changed_to_name_Family_that_exists()
+      throws Exception {
     Map<String, String> map = new HashMap<>();
     map.put("name", "Family");
     given().
@@ -108,8 +103,8 @@ public class PutOnContactList extends IntegrationTestConfigurer {
         then().
         contentType(JSON).
         statusCode(HttpStatus.CONFLICT.value()).
-        body("context",equalTo("contactlist")).
-        body("fieldErrors.field",contains("name")).
-        body("fieldErrors.message",contains("ContactList with name already exists."));
+        body("context", equalTo("contactlist")).
+        body("fieldErrors.field", contains("name")).
+        body("fieldErrors.message", contains("ContactList with name already exists."));
   }
 }

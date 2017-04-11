@@ -14,16 +14,16 @@ import org.springframework.stereotype.Component;
   private static int port;
   private static String baseUrl = "http://localhost:{port}";
 
-  @Value("${server.port}") public void setPort(int port) {
-    IntegrationTestUtils.port = port;
-  }
-
-  public static String getAccessToken(){
+  public static String getAccessToken() {
     return IntegrationTestUtils.accessToken;
   }
 
   public static String getEndPoint(final String uri) {
     return IntegrationTestUtils.baseUrl.replace("{port}", String.valueOf(IntegrationTestUtils.port))
         + uri;
+  }
+
+  @Value("${server.port}") public void setPort(int port) {
+    IntegrationTestUtils.port = port;
   }
 }
