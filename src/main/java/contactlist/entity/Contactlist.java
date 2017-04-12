@@ -11,7 +11,7 @@ import java.util.Collection;
     @UniqueConstraint(columnNames = { "name", "userid" }) }) public class ContactList
     implements Serializable {
   private static final long serialVersionUID = 1L;
-  @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
+  @Id() @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", nullable = false) private Long id;
   @Column(name = "userid", nullable = false) private Long userid;
   @Column(name = "name", nullable = false) private String name;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "contactList", targetEntity = Contact.class,

@@ -9,6 +9,7 @@ import exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +20,10 @@ import java.util.List;
 /**
  * Created by sangeet on 4/1/2017.
  */
-@Transactional() @Service() public class ContactListServiceImpl implements ContactListService {
+@Transactional("contactListTransactionManager") @Service() public class ContactListServiceImpl
+    implements ContactListService {
   private static final Logger LOGGER = LoggerFactory.getLogger(ContactListServiceImpl.class);
-  @Autowired() private ContactListRepository contactListRepository;
+  @Autowired() @Qualifier("contactListRepository") private ContactListRepository contactListRepository;
 
   private ContactList getContactList(final Long id, final Long userId) {
     ContactList contactList = contactListRepository.findByIdAndUserid(id, userId);

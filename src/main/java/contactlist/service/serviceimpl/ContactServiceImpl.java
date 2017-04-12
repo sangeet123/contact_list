@@ -8,6 +8,7 @@ import contactlist.repository.ContactRepository;
 import contactlist.service.ContactService;
 import exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +21,9 @@ import java.util.stream.Collectors;
 /**
  * Created by sangeet on 4/9/2017.
  */
-@Transactional() @Service() public class ContactServiceImpl implements ContactService {
-  @Autowired() private ContactRepository contactRepository;
+@Transactional("contactListTransactionManager") @Service() public class ContactServiceImpl
+    implements ContactService {
+  @Autowired() @Qualifier("contactRepository") private ContactRepository contactRepository;
 
   private static ContactResponse mapContactToContactResponse(final Contact contact) {
     final ContactResponse contactResponse = new ContactResponse();

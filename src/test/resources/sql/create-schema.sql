@@ -1,22 +1,6 @@
 DROP database IF EXISTS `integrationtestcontactlist`;
 create database `integrationtestcontactlist`;
 use integrationtestcontactlist;
-CREATE TABLE users(
-  id INT NOT NULL AUTO_INCREMENT,
-  username varchar(16) NOT NULL UNIQUE,
-  email varchar(255) NOT NULL UNIQUE,
-  password varchar(256) NOT NULL,
-  enabled bool,
-  create_time  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  last_login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  primary key(id)
-);
-
-CREATE TABLE user_roles(
-    username varchar(16) NOT NULL,
-    role varchar(16) NOT NULL
-);
-
 create table contactlist (
     userid INT,
     name VARCHAR(30),
@@ -35,3 +19,24 @@ create table contacts(
     CONSTRAINT UK_emailInContactList UNIQUE (email,contactlistid),
     FOREIGN KEY (contactlistid) REFERENCES contactlist(id));
 
+DROP database IF EXISTS `usertestDB`;
+create database usertestDB;
+use usertestDB;
+
+CREATE TABLE users(
+  id INT NOT NULL AUTO_INCREMENT,
+  firstname varchar(30) NOT NULL UNIQUE,
+  lastname varchar(30) NOT NULL UNIQUE,
+  username varchar(30) NOT NULL UNIQUE,
+  email varchar(255) NOT NULL UNIQUE,
+  password varchar(256) NOT NULL,
+  enabled bool,
+  create_time  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  primary key(id)
+);
+
+CREATE TABLE user_roles (
+  username varchar(30) NOT NULL,
+  role varchar(16) NOT NULL
+);

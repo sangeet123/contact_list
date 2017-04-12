@@ -11,7 +11,7 @@ import java.io.Serializable;
     implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @Id() @GeneratedValue() @Column(name = "id", nullable = false) private Long id;
+  @Id() @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", nullable = false) private Long id;
 
   @Column(name = "firstname") private String firstName;
 

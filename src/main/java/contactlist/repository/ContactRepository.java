@@ -7,14 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * Created by sangeet on 4/1/2017.
  */
-@Transactional() @Repository() public interface ContactRepository
+@Repository("contactRepository") public interface ContactRepository
     extends PagingAndSortingRepository<Contact, Long> {
   Contact findByIdAndContactListId(final Long id, final Long contactListId);
 
