@@ -10,7 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
  */
 public class ConstraintVoilationMapper implements DataIntegrityViolationMapper {
 
-  @Override public ValidationErrorInfo mapExceptoin(final DataIntegrityViolationException e) {
+  @Override public ValidationErrorInfo mapException(final DataIntegrityViolationException e) {
     if (e.getCause() instanceof ConstraintViolationException) {
       final ConstraintViolationException constraintViolationException = (ConstraintViolationException) e
           .getCause();

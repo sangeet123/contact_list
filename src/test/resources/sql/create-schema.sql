@@ -37,6 +37,8 @@ CREATE TABLE users(
 );
 
 CREATE TABLE user_roles (
+  id INT NOT NULL AUTO_INCREMENT,
   username varchar(30) NOT NULL,
-  role varchar(16) NOT NULL
+  role varchar(16) NOT NULL,
+  primary key(id)
 );

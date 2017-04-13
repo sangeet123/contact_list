@@ -11,10 +11,5 @@ import org.springframework.context.annotation.Configuration;
     "exception*", "error*" }) public class ContactListApplication {
   public static void main(String[] args) {
     SpringApplication.run(ContactListApplication.class, args);
-    //		String salt = BCrypt.gensalt(12);
-    //		String hashed_password = BCrypt.hashpw("v3rystr0ngPassword", salt);
-    //		System.out.println(hashed_password);
-    //
-    //		System.out.println(BCrypt.checkpw("v3rystr0ngPassword", hashed_password));
   }
 }
